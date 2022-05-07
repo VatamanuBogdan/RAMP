@@ -10,7 +10,9 @@ repositories {
     mavenCentral()
 }
 
-
+dependencies {
+    implementation "io.ktor:ktor-client-websockets:$ktor_version"
+}
 
 compileKotlin {
     kotlinOptions.jvmTarget = '11'
