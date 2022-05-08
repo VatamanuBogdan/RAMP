@@ -4,16 +4,13 @@ import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
 import io.ktor.websocket.*
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import ramp.messages.*
 
 
-class ConnectionManager(val address: NetworkAddress, val dispatcher: MessageDispatcher) {
+class ConnectionManager(val robotId: String, val address: NetworkAddress, val dispatcher: MessageDispatcher) {
     private val client: HttpClient = HttpClient {
         install(WebSockets)
     }
@@ -21,6 +18,9 @@ class ConnectionManager(val address: NetworkAddress, val dispatcher: MessageDisp
 
     suspend fun startRunning() {
         client.webSocket(HttpMethod.Get, address.host, address.port, address.path) {
+            val loginMessage = LoginMessage(MessageTransport(robotId, ""), robotId);
+            send(Json.encodeToString(MessageSerializer, loginMessage))
+
             session = this
             handleIncomingMessages()
             session = null

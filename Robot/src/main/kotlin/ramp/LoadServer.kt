@@ -3,7 +3,7 @@ package ramp
 import ramp.messages.Message
 import ramp.messages.WorkPublishMessage
 
-class LoadServer {
+class LoadServer(private val robot: Robot) {
     var dispatcher: MessageDispatcher? = null
 
     fun handleMessage(message: Message) {
@@ -12,5 +12,4 @@ class LoadServer {
             else -> println("Message: $message")
         }
     }
-
 }

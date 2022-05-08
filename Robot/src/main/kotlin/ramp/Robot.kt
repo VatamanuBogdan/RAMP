@@ -23,16 +23,16 @@ class RobotMessageDispatcher(
     }
 }
 
-class Robot(private val UUID: String) {
+class Robot(val id: String) {
 
     suspend fun run() = coroutineScope {
-        println("Started running: $UUID")
+        println("Started running: $id")
 
-        val loadServer = LoadServer()
-        val loadPublisher = LoadPublisher()
+        val loadServer = LoadServer(this@Robot)
+        val loadPublisher = LoadPublisher(this@Robot)
         val dispatcher = RobotMessageDispatcher(loadServer, loadPublisher)
 
-        val connectionManager = ConnectionManager(DefaultNetworkAddress, dispatcher)
+        val connectionManager = ConnectionManager(id, DefaultNetworkAddress, dispatcher)
         dispatcher.connectionManager = connectionManager
 
         launch { connectionManager.startRunning() }
