@@ -1,12 +1,12 @@
 package ramp.plugins
 
+import kotlinx.serialization.json.Json
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import java.time.Duration
 import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.request.*
 import io.ktor.server.routing.*
+import ramp.messages.*
 
 fun Application.configureSockets() {
     install(WebSockets) {
@@ -17,17 +17,14 @@ fun Application.configureSockets() {
     }
 
     routing {
-        webSocket("/") { // websocketSession
+        webSocket("/ws") {
             for (frame in incoming) {
-                when (frame) {
-                    is Frame.Text -> {
-                        val text = frame.readText()
-                        outgoing.send(Frame.Text("YOU SAID: $text"))
-                        if (text.equals("bye", ignoreCase = true)) {
-                            close(CloseReason(CloseReason.Codes.NORMAL, "Client said BYE"))
-                        }
-                    }
+                frame as? Frame.Text ?: continue
+                when (val message = Json.decodeFromString(MessageSerializer, frame.readText())) {
+                    is WorkPublishMessage -> println("Work Publish Message: $message")
+                    else -> println("Message $message")
                 }
+                send(frame)
             }
         }
     }

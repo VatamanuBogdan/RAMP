@@ -1,1 +1,3 @@
 rootProject.name = "Environment"
+include ':MessageKit'
+project(':MessageKit').projectDir = new File('../MessageKit')
