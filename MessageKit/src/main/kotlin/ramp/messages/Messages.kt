@@ -3,4 +3,7 @@ package ramp.messages
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WorkPublishMessage(override val info: MessageTransport, val work: String): Message()
+data class LoginMessage(override val transport: MessageTransport, val robotId: String): Message()
+
+@Serializable
+data class WorkPublishMessage(override val transport: MessageTransport, val work: String): Message()

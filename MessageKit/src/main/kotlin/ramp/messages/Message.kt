@@ -6,5 +6,5 @@ data class MessageTransport(val senderId: String, val receiverId: String, val br
 
 @Serializable
 sealed class Message {
-    abstract val info: MessageTransport
+    abstract val transport: MessageTransport
 }
