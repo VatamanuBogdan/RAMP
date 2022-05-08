@@ -1,4 +1,4 @@
-package ramp
+package ramp.robot.communication
 
 import ramp.messages.Message
 

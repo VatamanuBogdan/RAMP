@@ -1,4 +1,4 @@
-package ramp
+package ramp.robot.communication
 
 class NetworkAddress(val host: String, val port: Int, val path: String)
 

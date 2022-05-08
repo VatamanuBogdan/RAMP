@@ -1,4 +1,4 @@
-package ramp
+package ramp.robot.communication
 
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
