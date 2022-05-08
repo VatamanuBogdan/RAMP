@@ -17,7 +17,7 @@ fun Application.configureSockets() {
     }
 
     routing {
-        webSocket("/ws") {
+        webSocket("/ramp-communication") {
             for (frame in incoming) {
                 frame as? Frame.Text ?: continue
                 when (val message = Json.decodeFromString(MessageSerializer, frame.readText())) {

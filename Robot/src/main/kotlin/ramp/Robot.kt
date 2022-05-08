@@ -32,7 +32,7 @@ class Robot(private val UUID: String) {
         val loadPublisher = LoadPublisher()
         val dispatcher = RobotMessageDispatcher(loadServer, loadPublisher)
 
-        val connectionManager = ConnectionManager("127.0.0.1", 8080, "/ws", dispatcher)
+        val connectionManager = ConnectionManager(DefaultNetworkAddress, dispatcher)
         dispatcher.connectionManager = connectionManager
 
         launch { connectionManager.startRunning() }

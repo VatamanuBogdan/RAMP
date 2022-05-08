@@ -13,14 +13,14 @@ import kotlinx.serialization.json.Json
 import ramp.messages.*
 
 
-class ConnectionManager(val host: String, val port: Int, val path: String, val dispatcher: MessageDispatcher) {
+class ConnectionManager(val address: NetworkAddress, val dispatcher: MessageDispatcher) {
     private val client: HttpClient = HttpClient {
         install(WebSockets)
     }
     private var session: DefaultClientWebSocketSession? = null
 
     suspend fun startRunning() {
-        client.webSocket(HttpMethod.Get, host, port, path) {
+        client.webSocket(HttpMethod.Get, address.host, address.port, address.path) {
             session = this
             handleIncomingMessages()
             session = null
