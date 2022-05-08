@@ -1,3 +1,4 @@
-
+include ':MessageKit'
+project(':MessageKit').projectDir = new File('../MessageKit')
 rootProject.name = 'Robot'
 
