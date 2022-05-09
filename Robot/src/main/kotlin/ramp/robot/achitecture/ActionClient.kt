@@ -10,6 +10,14 @@ class ActionClient(private val robot: Robot, tasks: List<RobotTask>) {
 
     suspend fun startRunning() = coroutineScope {
         Robot.logger.info("[$TAG] Action Client started...")
+
+        var totalLoading: Long = 0
+        for (localTask in localTasks) {
+            totalLoading += localTask.timeToAccomplish
+        }
+
+        robot.loadPublisher.loadingValue = totalLoading
+
         for (task in localTasks) {
             robot.actionServer.sendTask(task)
             Robot.logger.info("[$TAG] Sent task to ActionClient: ${task.name}")

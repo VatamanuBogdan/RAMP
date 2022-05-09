@@ -7,5 +7,5 @@ fun main(args: Array<String>) = runBlocking {
             return@runBlocking
         }
 
-        Robot(args[0]).run(args[1])
+        Robot(args[0]).startRunning(args[1])
 }

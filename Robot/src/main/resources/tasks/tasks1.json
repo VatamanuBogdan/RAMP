@@ -1,12 +1,42 @@
 [
   {
     "name": "Task1",
-    "timeToAccomplish": 20000,
+    "timeToAccomplish": 16000,
     "processingData": "100100101001010010101010010100101001001010010101001010"
   },
   {
     "name": "Task2",
-    "timeToAccomplish": 1000000,
+    "timeToAccomplish": 15000,
+    "processingData": "010101011111100001100100101001010100101001001010010100101001010010"
+  },
+  {
+    "name": "Task3",
+    "timeToAccomplish": 10000,
+    "processingData": "010101011111100001100100101001010100101001001010010100101001010010"
+  },
+  {
+    "name": "Task4",
+    "timeToAccomplish": 8000,
+    "processingData": "010101011111100001100100101001010100101001001010010100101001010010"
+  },
+  {
+    "name": "Task5",
+    "timeToAccomplish": 8000,
+    "processingData": "010101011111100001100100101001010100101001001010010100101001010010"
+  },
+  {
+    "name": "Task6",
+    "timeToAccomplish": 10000,
+    "processingData": "010101011111100001100100101001010100101001001010010100101001010010"
+  },
+  {
+  "name": "Task7",
+  "timeToAccomplish": 10000,
+  "processingData": "010101011111100001100100101001010100101001001010010100101001010010"
+  },
+  {
+    "name": "Task8",
+    "timeToAccomplish": 20000,
     "processingData": "010101011111100001100100101001010100101001001010010100101001010010"
   }
 ]

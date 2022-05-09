@@ -33,7 +33,6 @@ class ActionServer(private val robot: Robot, private val maxTasksNum: Int) {
             val task = try {
                 tasksChannel.receive()
             } catch (e: ClosedReceiveChannelException) {
-                this.cancel()
                 return@withContext
             }
 
@@ -50,6 +49,6 @@ class ActionServer(private val robot: Robot, private val maxTasksNum: Int) {
     }
 
     companion object {
-        val TAG = "ActionServer"
+        const val TAG = "ActionServer"
     }
 }

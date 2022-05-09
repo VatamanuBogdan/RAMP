@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin/'
+}
+
 dependencies {
     // Internal dependencies
     implementation project(":MessageKit")
