@@ -4,9 +4,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
-
-@Serializable
-data class RobotTask(val name: String, val timeToAccomplish: Long, val processingData: String)
+import ramp.messages.RobotTask
 
 object RobotTaskLoader {
     @OptIn(ExperimentalSerializationApi::class)
