@@ -4,7 +4,9 @@ import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import ramp.messages.*
@@ -14,6 +16,7 @@ class ConnectionManager(val robotId: String, val address: NetworkAddress, val di
     private val client: HttpClient = HttpClient {
         install(WebSockets)
     }
+    private val outgoingChannel = Channel<Message>()
     private var session: DefaultClientWebSocketSession? = null
 
     suspend fun startRunning() {
@@ -22,23 +25,22 @@ class ConnectionManager(val robotId: String, val address: NetworkAddress, val di
             send(Json.encodeToString(MessageSerializer, loginMessage))
 
             session = this
-            handleIncomingMessages()
+            val incomingHandlerJob = launch { handleIncomingMessages() }
+            val outgoingHandlerJob = launch { handleOutgoingMessages() }
+            incomingHandlerJob.join()
+            outgoingHandlerJob.join()
             session = null
         }
         client.close()
     }
 
-    suspend fun sendMessage(message: Message) {
-        if (session == null)
-            return;
+    suspend fun stopRunning() {
+        outgoingChannel.close()
+        session?.close()
+    }
 
-        withContext(session!!.coroutineContext) {
-            try {
-                session!!.send(Json.encodeToString(MessageSerializer, message))
-            } catch (e: Exception) {
-                println("Error while sending: ${e.localizedMessage}")
-            }
-        }
+    suspend fun sendMessage(message: Message) {
+        outgoingChannel.send(message)
     }
 
     private suspend fun handleIncomingMessages() {
@@ -52,6 +54,16 @@ class ConnectionManager(val robotId: String, val address: NetworkAddress, val di
             println("Connection closed")
         } catch (e: Exception) {
             println("Error while receiving: ${e.localizedMessage}")
+        }
+    }
+
+    private suspend fun handleOutgoingMessages() {
+        for (message in outgoingChannel) {
+            try {
+                session!!.send(Json.encodeToString(MessageSerializer, message))
+            } catch (e: Exception) {
+                println("Error while sending: ${e.localizedMessage}")
+            }
         }
     }
 }
