@@ -1,6 +1,6 @@
 package ramp.robot.achitecture
 
-import ramp.Robot
+import ramp.robot.Robot
 import ramp.messages.Message
 import ramp.messages.WorkPublishMessage
 import ramp.robot.communication.MessageDispatcher

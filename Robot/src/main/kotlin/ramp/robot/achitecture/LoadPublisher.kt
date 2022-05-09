@@ -1,7 +1,7 @@
 package ramp.robot.achitecture
 
 import kotlinx.coroutines.delay
-import ramp.Robot
+import ramp.robot.Robot
 import ramp.messages.MessageTransport
 import ramp.messages.WorkPublishMessage
 import ramp.robot.communication.MessageDispatcher

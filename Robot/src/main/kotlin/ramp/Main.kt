@@ -1,5 +1,5 @@
 import kotlinx.coroutines.runBlocking
-import ramp.Robot
+import ramp.robot.Robot
 
 fun main(args: Array<String>) = runBlocking {
         if (args.size != 2) {
