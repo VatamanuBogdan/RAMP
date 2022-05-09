@@ -10,12 +10,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import ramp.messages.*
+import ramp.robot.Robot
 
 
-class ConnectionManager(val robotId: String, val address: NetworkAddress, val dispatcher: MessageDispatcher) {
+class ConnectionManager(private val robotId: String,
+                        private val address: NetworkAddress,
+                        private val dispatcher: MessageDispatcher) {
+
     private val client: HttpClient = HttpClient {
         install(WebSockets)
     }
+
     private val outgoingChannel = Channel<Message>()
     private var session: DefaultClientWebSocketSession? = null
 
@@ -51,9 +56,9 @@ class ConnectionManager(val robotId: String, val address: NetworkAddress, val di
                 dispatcher.dispatchIncomingMessage(decodedMessage)
             }
         } catch (e: ClosedReceiveChannelException) {
-            println("Connection closed")
+            Robot.logger.error("[$TAG] incoming channel closed while receiving")
         } catch (e: Exception) {
-            println("Error while receiving: ${e.localizedMessage}")
+            Robot.logger.error("[$TAG] Exception while receiving: ${e.localizedMessage}")
         }
     }
 
@@ -62,8 +67,12 @@ class ConnectionManager(val robotId: String, val address: NetworkAddress, val di
             try {
                 session!!.send(Json.encodeToString(MessageSerializer, message))
             } catch (e: Exception) {
-                println("Error while sending: ${e.localizedMessage}")
+                Robot.logger.error("[$TAG] Exception while sending: ${e.localizedMessage}")
             }
         }
+    }
+
+    companion object {
+        const val TAG = "ConnectionManager"
     }
 }

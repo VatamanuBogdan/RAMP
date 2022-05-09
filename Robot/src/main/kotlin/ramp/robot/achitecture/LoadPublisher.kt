@@ -11,22 +11,20 @@ import ramp.robot.communication.MessageDispatcher
 
 class LoadPublisher(private val robot: Robot) {
     private lateinit var mainCoroutineScope: CoroutineScope
-    var loadingValue: Long = -1
     var dispatcher: MessageDispatcher? = null
-
-    fun stopRunning() = mainCoroutineScope.cancel()
 
     suspend fun startRunning() = coroutineScope {
         try {
             Robot.logger.info("[$TAG] Load Publisher started...")
             mainCoroutineScope = this
             while (true) {
+                val localLoadValue = robot.actionClient.localLoad
                 delay(TIMEOUT)
-                if (loadingValue == -1L) {
+                if (localLoadValue == null) {
                     continue
                 }
-
-                val loadingMessage = LoadingMessage(MessageTransport(robot.id, "", true), loadingValue);
+                val messageTransport = MessageTransport(robot.id, "", true)
+                val loadingMessage = LoadingMessage(messageTransport, localLoadValue)
                 dispatcher?.dispatchOutgoingMessage(loadingMessage)
             }
         } finally {
@@ -34,8 +32,10 @@ class LoadPublisher(private val robot: Robot) {
         }
     }
 
+    fun stopRunning() = mainCoroutineScope.cancel()
+
     companion object {
         const val TAG = "LoadPublisher"
-        const val TIMEOUT = 1000L
+        const val TIMEOUT = 200L
     }
 }

@@ -4,8 +4,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.channels.ClosedSendChannelException
+import ramp.messages.RobotTask
 import ramp.robot.Robot
-import ramp.robot.task.RobotTask
 import java.util.concurrent.atomic.AtomicInteger
 
 class ActionServer(private val robot: Robot, private val maxTasksNum: Int) {
@@ -37,10 +37,10 @@ class ActionServer(private val robot: Robot, private val maxTasksNum: Int) {
             }
 
             launch {
-                Robot.logger.info("[$TAG] Started task ${task.name} with ETA ${task.timeToAccomplish}")
+                Robot.logger.info("[$TAG] Started task ${task.id} with ETA ${task.timeToAccomplish}")
                 taskRunningCounter.decrementAndGet()
                 delay(task.timeToAccomplish)
-                Robot.logger.info("[$TAG] Finished task ${task.name}")
+                Robot.logger.info("[$TAG] Finished task ${task.id}")
                 taskRunningCounter.incrementAndGet()
 
                 try { workersChannel.send(Unit) } catch (_: ClosedSendChannelException) { }

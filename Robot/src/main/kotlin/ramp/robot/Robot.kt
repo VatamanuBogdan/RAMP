@@ -1,7 +1,6 @@
 package ramp.robot
 
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory;
 import ramp.robot.achitecture.ActionClient
@@ -34,7 +33,7 @@ class Robot(val id: String) {
         loadServer = LoadServer(this@Robot)
         loadPublisher = LoadPublisher(this@Robot)
 
-        val dispatcher = RobotMessageDispatcher(loadServer, loadPublisher)
+        val dispatcher = RobotMessageDispatcher(loadServer, loadPublisher, actionClient)
         val connectionManager = ConnectionManager(id, DefaultNetworkAddress, dispatcher)
         dispatcher.connectionManager = connectionManager
 
