@@ -23,7 +23,6 @@ fun Application.configureSockets() {
 
         suspend fun loginProcess(session: DefaultWebSocketSession): Connection? {
             try {
-                
                 val frame = session.incoming.receive()
                 if (frame !is Frame.Text) {
                     return null
@@ -77,9 +76,14 @@ fun Application.configureSockets() {
                 return@webSocket
             }
 
-            for (frame in incoming) {
-                routeFrame(this, currentConnection, frame)
+            try {
+                for (frame in incoming) {
+                    routeFrame(this, currentConnection, frame)
+                }
+            } finally {
+                connectionRegistry.remove(currentConnection.robotId)
             }
+
         }
     }
 }
