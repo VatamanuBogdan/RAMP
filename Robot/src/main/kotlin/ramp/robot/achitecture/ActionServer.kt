@@ -3,6 +3,7 @@ package ramp.robot.achitecture
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
+import kotlinx.coroutines.channels.ClosedSendChannelException
 import ramp.robot.Robot
 import ramp.robot.task.RobotTask
 import java.util.concurrent.atomic.AtomicInteger
@@ -16,10 +17,14 @@ class ActionServer(private val robot: Robot, private val maxTasksNum: Int) {
         for (i in 1..maxTasksNum)
             workersChannel.send(Unit)
 
+        Robot.logger.info("[$TAG] Action Server started...")
         startListeningForWork()
+        Robot.logger.info("[$TAG] Action Server stopped")
     }
 
     suspend fun sendTask(task: RobotTask) = tasksChannel.send(task)
+
+    fun stopRunning() = tasksChannel.close()
 
     fun isAvailable() = taskRunningCounter.get() < maxTasksNum
 
@@ -33,11 +38,18 @@ class ActionServer(private val robot: Robot, private val maxTasksNum: Int) {
             }
 
             launch {
+                Robot.logger.info("[$TAG] Started task ${task.name} with ETA ${task.timeToAccomplish}")
                 taskRunningCounter.decrementAndGet()
                 delay(task.timeToAccomplish)
+                Robot.logger.info("[$TAG] Finished task ${task.name}")
                 taskRunningCounter.incrementAndGet()
-                workersChannel.send(Unit)
+
+                try { workersChannel.send(Unit) } catch (_: ClosedSendChannelException) { }
             }
         }
+    }
+
+    companion object {
+        val TAG = "ActionServer"
     }
 }
