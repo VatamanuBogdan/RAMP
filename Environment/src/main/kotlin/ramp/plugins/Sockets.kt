@@ -55,6 +55,8 @@ fun Application.configureSockets() {
         suspend fun routeFrame(session: DefaultWebSocketSession, currentConnection: Connection, frame: Frame) {
             val message = decodeMessageFrom(frame) ?: return
 
+            println(message)
+
             val transport = message.transport
             println("Routing message FROM [${transport.senderId}] TO [${if (transport.broadcast) "ALL" else transport.receiverId}]")
 
