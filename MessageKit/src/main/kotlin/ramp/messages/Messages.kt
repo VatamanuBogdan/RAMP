@@ -17,6 +17,3 @@ data class WorkMessage(
 data class WorkResponseMessage(
     override val transport: MessageTransport, val taskId: String, val accepted: Boolean
 ) : Message()
-
-@Serializable
-data class WorkPublishMessage(override val transport: MessageTransport, val work: String): Message()
