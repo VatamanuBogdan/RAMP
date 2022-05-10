@@ -1,0 +1,40 @@
+> Task :MessageKit:compileKotlin
+> Task :MessageKit:compileJava NO-SOURCE
+
+> Task :compileKotlin
+w: /home/ux/EPSM-RAMP/Robot/src/main/kotlin/ramp/robot/task/RobotTaskLoader.kt: (9, 6): This class can only be used with the compiler argument '-opt-in=kotlin.RequiresOptIn'
+
+> Task :compileJava NO-SOURCE
+> Task :processResources
+> Task :classes
+> Task :MessageKit:processResources NO-SOURCE
+> Task :MessageKit:classes UP-TO-DATE
+> Task :MessageKit:inspectClassesForKotlinIC
+> Task :MessageKit:jar
+
+> Task :run
+21:19:42.708 INFO - Robot started with [Claudius] id and [task-empty] tasks list
+21:19:42.930 INFO - [LoadPublisher] Load Publisher started...
+21:19:42.933 INFO - [ActionServer] Action Server started...
+21:19:42.935 INFO - [ActionClient] Action Client started...
+21:19:55.210 INFO - [ActionClient] Sent task to ActionClient: Task-1-1
+21:19:55.224 INFO - [ActionServer] Started task Task-1-1 with ETA 30000
+21:19:55.236 INFO - [ActionClient] Sent task to ActionClient: Task-1-2
+21:19:55.236 INFO - [ActionServer] Started task Task-1-2 with ETA 45000
+21:19:55.251 INFO - [ActionClient] Sent task to ActionClient: Task-1-3
+21:19:55.252 INFO - [ActionServer] Started task Task-1-3 with ETA 10000
+21:19:55.269 INFO - [ActionClient] Sent task to ActionClient: Task-1-4
+21:19:55.269 INFO - [ActionServer] Started task Task-1-4 with ETA 8000
+21:19:55.286 INFO - [ActionClient] Sent task to ActionClient: Task-1-5
+21:20:03.270 INFO - [ActionServer] Finished task Task-1-4
+21:20:03.271 INFO - [ActionClient] Sent task to ActionClient: Task-1-6
+21:20:03.271 INFO - [ActionServer] Started task Task-1-5 with ETA 8000
+21:20:05.253 INFO - [ActionServer] Finished task Task-1-3
+21:20:05.253 INFO - [ActionClient] Sent task to ActionClient: Task-1-7
+21:20:05.254 INFO - [ActionServer] Started task Task-1-6 with ETA 10000
+21:20:11.272 INFO - [ActionServer] Finished task Task-1-5
+21:20:11.273 INFO - [ActionServer] Started task Task-1-7 with ETA 10000
+21:20:15.254 INFO - [ActionServer] Finished task Task-1-6
+21:20:21.275 INFO - [ActionServer] Finished task Task-1-7
+21:20:25.225 INFO - [ActionServer] Finished task Task-1-1
+21:20:40.237 INFO - [ActionServer] Finished task Task-1-2

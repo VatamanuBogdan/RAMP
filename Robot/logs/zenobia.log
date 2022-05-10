@@ -1,0 +1,32 @@
+> Task :MessageKit:compileKotlin
+> Task :MessageKit:compileJava NO-SOURCE
+
+> Task :compileKotlin
+w: /home/ux/EPSM-RAMP/Robot/src/main/kotlin/ramp/robot/task/RobotTaskLoader.kt: (9, 6): This class can only be used with the compiler argument '-opt-in=kotlin.RequiresOptIn'
+
+> Task :compileJava NO-SOURCE
+> Task :processResources
+> Task :classes
+> Task :MessageKit:processResources NO-SOURCE
+> Task :MessageKit:classes UP-TO-DATE
+> Task :MessageKit:inspectClassesForKotlinIC
+> Task :MessageKit:jar
+
+> Task :run
+21:19:51.950 INFO - Robot started with [Zenobia] id and [tasks1] tasks list
+21:19:52.175 INFO - [LoadPublisher] Load Publisher started...
+21:19:52.177 INFO - [ActionServer] Action Server started...
+21:19:52.179 INFO - [ActionClient] Action Client started...
+21:19:55.228 INFO - [ActionClient] Task Task-1-1 was move to Claudius
+21:19:55.243 INFO - [ActionClient] Task Task-1-2 was move to Claudius
+21:19:55.259 INFO - [ActionClient] Task Task-1-3 was move to Claudius
+21:19:55.278 INFO - [ActionClient] Task Task-1-4 was move to Claudius
+21:19:55.293 INFO - [ActionClient] Task Task-1-5 was move to Claudius
+21:19:55.308 INFO - [ActionClient] Task Task-1-6 was move to Claudius
+21:19:55.324 INFO - [ActionClient] Task Task-1-7 was move to Claudius
+21:19:55.344 INFO - [ActionClient] Sent task to ActionClient: Task-1-8
+21:19:55.361 INFO - [ActionClient] Sent task to ActionClient: Task-1-9
+21:19:55.363 INFO - [ActionServer] Started task Task-1-8 with ETA 20000
+21:19:55.364 INFO - [ActionServer] Started task Task-1-9 with ETA 20000
+21:20:15.364 INFO - [ActionServer] Finished task Task-1-9
+21:20:15.364 INFO - [ActionServer] Finished task Task-1-8
