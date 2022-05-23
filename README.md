@@ -1,5 +1,7 @@
 # EPSM-RAMP
 
+[![asciicast](https://asciinema.org/a/496753.svg)](https://asciinema.org/a/496753)
+
 The implementation is based on 3 components, described below.
 
 ### Environment
