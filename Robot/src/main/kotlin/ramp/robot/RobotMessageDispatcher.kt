@@ -25,7 +25,7 @@ class RobotMessageDispatcher(
     override suspend fun dispatchIncomingMessage(message: Message) {
         when (message) {
             is LoadingMessage -> loadServer.handleLoadingMessage(message)
-            is WorkMessage -> actionClient.handlerWorkMessage(message)
+            is WorkMessage -> actionClient.handleWorkMessage(message)
             is WorkResponseMessage -> actionClient.handleWorkResponseMessage(message)
             else -> {}
         }

@@ -38,10 +38,13 @@ class ActionServer(private val robot: Robot, private val maxTasksNum: Int) {
 
             launch {
                 Robot.logger.info("[$TAG] Started task ${task.id} with ETA ${task.timeToAccomplish}")
-                taskRunningCounter.decrementAndGet()
+                taskRunningCounter.incrementAndGet()
                 delay(task.timeToAccomplish)
                 Robot.logger.info("[$TAG] Finished task ${task.id}")
-                taskRunningCounter.incrementAndGet()
+                val runningTasks = taskRunningCounter.decrementAndGet()
+                if (runningTasks <= 0) {
+                    Robot.logger.info("[$TAG] Currently no task in execution. Starving...")
+                }
 
                 try { workersChannel.send(Unit) } catch (_: ClosedSendChannelException) { }
             }

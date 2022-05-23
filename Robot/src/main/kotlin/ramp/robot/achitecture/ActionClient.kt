@@ -39,7 +39,7 @@ class ActionClient(private val robot: Robot, private val tasks: List<RobotTask>)
         responseMessagesChannel.send(message)
     }
 
-    suspend fun handlerWorkMessage(message: WorkMessage) {
+    suspend fun handleWorkMessage(message: WorkMessage) {
         var accepted = false
         if (_localLoad.get() + message.task.timeToAccomplish < message.senderLoadValue) {
             localTasksChannel.send(message.task)
@@ -52,7 +52,7 @@ class ActionClient(private val robot: Robot, private val tasks: List<RobotTask>)
     }
 
     private suspend fun remoteTasksDistributionRoutine() {
-        delay(3000)
+        delay(ROBOTS_SYNC_TIMEOUT)
         for (task in tasks) {
             var bestRobotId: String? = null
             var bestLoadValue = _localLoad.get()
@@ -94,5 +94,6 @@ class ActionClient(private val robot: Robot, private val tasks: List<RobotTask>)
     companion object {
         const val TAG = "ActionClient"
         const val CHANNEL_SIZE = 1024
+        const val ROBOTS_SYNC_TIMEOUT = 3000L
     }
 }
